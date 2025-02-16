@@ -61,51 +61,51 @@ class _RegisterViewState extends State<RegisterView> {
         title: Text(
           'Register',
           style: TextStyle(
-              fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
         ),
         backgroundColor: Colors.blue,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _email,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    TextField(
-                      controller: _password,
-                      obscureText: true, //hidden password
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(onPressed: _submit, child: Text('Register')),
-                  ],
-                ),
-              );
-            default:
-              return const Text("Loading...");
-          }
-        },
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle:
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _password,
+              obscureText: true, //hidden password
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle:
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(onPressed: _submit, child: Text('Register')),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/login/', 
+                  (route) => false
+                );
+              },
+              child: const Text('Already register? Login here!')
+            )
+          ],
+        ),
       ),
     );
   }

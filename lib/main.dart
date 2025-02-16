@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mynotes_yt/firebase_options.dart';
 import 'package:mynotes_yt/views/login_view.dart';
+import 'package:mynotes_yt/views/register_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized;
@@ -14,6 +15,10 @@ void main() {
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: HomePage(),
+      routes: {
+        '/login/': (context) => LoginView(),
+        '/register/': (context) => RegisterView(),
+      },
     )
   );
   
@@ -24,40 +29,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Home',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold 
-          ),
-          
-        ),
-        backgroundColor: Colors.blue,
-      ),
-      body: FutureBuilder(
+    return FutureBuilder(
         future: Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform
         ), 
         builder: (context, snapshot)  {
           switch (snapshot.connectionState) {            
             case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-              if(user?.emailVerified ?? false) {
-                print('You are a verfied user!');
-              }else {
-                print('You need to verified your email first!');
-              }
-              return Text('done');
+              // final user = FirebaseAuth.instance.currentUser;
+              
+              // if(user?.emailVerified ?? false) {
+              //   print('You are a verfied user!');
+              //   return Text('done');
+              // }else {
+              //   print('Here is current User: ${user}');
+              //   return VerifyEmailView();
+              // }
+              return LoginView();
+              
             default:
-              return Text('Loading..');
+              return CircularProgressIndicator();
           }
         }
-      ),
-    );
+      );
   }
 }
+
+
 
 
 

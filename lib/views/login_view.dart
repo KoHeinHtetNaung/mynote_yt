@@ -55,54 +55,53 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Login',
           style: TextStyle(
-              fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
         ),
         backgroundColor: Colors.blue,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _email,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    TextField(
-                      controller: _password,
-                      obscureText: true, //hidden password
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(onPressed: _submit, child: Text('Login')),
-                  ],
-                ),
-              );
-            default:
-              return const Text("Loading...");
-          }
-        },
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold)),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _password,
+              obscureText: true, //hidden password
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(onPressed: _submit, child: Text('Login')),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/register/', (route) => false
+                );
+              }, 
+              child: Text('Not register yet? Register here!')
+            )
+          ],
+        ),
       ),
     );
   }
